@@ -1,0 +1,68 @@
+1.画函数调用过程（栈帧）。
+2.再次模拟实现strstr函数。
+#include <stdio.h>
+#include <string.h>
+
+const char* my_strstr(const char *string,const char *str)
+{
+	const char* ret1 = string;
+	const char* ret2 = str;
+	while (*string != '\0')
+	{
+		ret1 = string;
+		while (*string == *ret2)
+		{
+			string++;
+			ret2++;
+			if (*ret2 == '\0')
+			{
+				return ret1;
+			}
+		}
+		ret2 = str;
+		ret1++;
+		string = ret1;
+	}
+	return ret1;
+}
+int main()
+{
+	char a[] = "abbbcdef";
+	printf("%s\n",my_strstr(a,"bbc"));
+	return 0;
+}
+3.模拟实现strncat函数。
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <assert.h>
+
+char *my_strncat(char *dest, const char *src, int k, int sz)
+{
+	int m = strlen(dest);
+	char *ret = dest;
+	assert(dest != NULL);
+	assert(src != NULL);
+	dest += m;
+	while (k && (*src != '\0'))
+	{
+		*dest++ = *src++;
+		k--;
+	}
+	if (m+k >= sz)
+	{
+		printf("目标数组长度不够！！");
+		exit(1);
+	}
+	return ret;
+}
+int main()
+{
+	char arr1[20] = "hello ";
+	char arr2[] = "bit. world";
+	int k = 0;
+	int sz = sizeof(arr1);
+	scanf("%d",&k);
+	printf("%s\n",my_strncat(arr1,arr2,k,sz));
+	return 0;
+}
